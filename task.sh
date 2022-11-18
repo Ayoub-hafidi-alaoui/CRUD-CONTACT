@@ -1,6 +1,6 @@
 #! /bin/bash
 
-DATABASE = ./database.txt
+DATABASE=./database.txt
 
 
 display_menu() {
@@ -37,8 +37,9 @@ add_new_contact() {
 	read -p "please enter your lastname: " lastname
 	read -p "please enter your email: " email
 	read -p "please enter your phone: " phone
-	echo "firstname: $firstname               lastname: $lastname            email: $email                       phone: $phone" >> database.txt
-}
+	echo "firstname: $firstname: lastname: $lastname email: $email  phone: $phone" >> database.txt
+	echo -e  "-------------------------------------------------------------------------------------------------\n" >> database.txt
+	}
 
 
 view_all_contacts() {
@@ -58,9 +59,10 @@ search_for_contact() {
 	read -p "please enter any information about the contact: "  search
 	if [ -f "database.txt" ]
 	then
+		echo $(cat $DATABASE)
 		for contact in $(cat database.txt)
 		do
-			echo contact | grep $search
+			echo $contact | grep $search
 		done
 	else
 		echo "there is no contacts please insert new contact"
@@ -69,6 +71,8 @@ search_for_contact() {
 }
 
 delete_contact() {
+	echo "hello from delete"
+	echo $(rm database.txt  && touch database.txt)
 }
 
 while true
@@ -101,6 +105,16 @@ do
 			esac ;; 
 		s | S)
 			search_for_contact ;;
+			echo "press m to retun to the main menu"
+			echo "press q to exit"
+			read $choice in 
+				m | M)
+					continue;;
+				q | Q)
+					break;;
+
+		e |E)
+			delete_contact;;
 		q | Q)
 			break ;;
 	esac
